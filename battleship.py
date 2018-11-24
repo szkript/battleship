@@ -188,7 +188,6 @@ def main(): #
     print_grid(grids)
     f = "k"#input("Enter your name commander: " )
     playerShips = placeBoat(grids)
-    #grids[playerShips[0][0]][playerShips[0][1]] = 3        
     while True:        
         print("\n")
         print_grid(grids)        
