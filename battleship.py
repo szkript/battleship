@@ -4,9 +4,9 @@ import sys
 from random import randint
 
 """
-MISSING stuffs /TODO:
+MISSING stuffs //TODO:
 
-
+//FIXME: Még nincs kész
 def angle(rng): 
     if rng == true:
         gen random angle
