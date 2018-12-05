@@ -111,25 +111,34 @@ def placeBoat(grids):
 
     for ship in ships:
         x = ships[ship][1][1]
-        while x != 0:            
-            print("place: "+str(ship)+" | Size: "+str(ships[ship][0][1])+" | "+str(x)+" ship left to place" )
-            shipsOnBoard = (usr_coords())
-            grids[shipsOnBoard[0]][shipsOnBoard[1]] = 3
-            print_grid(grids)
-            x -= 1
+        #   while x != 0:            
+        print("place: "+str(ship)+" | Size: "+str(ships[ship][0][1])+" | "+str(x)+" ship left to place" )
+        shipsOnBoard = (usr_coords())
+        # //TODO: angle
+        angle = getAngle()
+        print(angle)
+        grids[shipsOnBoard[0]][shipsOnBoard[1]] = 3
+        
+        size = ships[ship][0][1]
+        for x in range(size):
+            if angle == "r":
+                # te meg normális
+                print("vmi")
+                pass
+            elif angle == "d":
+                # menjé lefele
+                pass
 
-
-    """
-    for ship in ships:
-        for
-        shipsOnBoard.append(usr_coords())
-        shipsOnBoard.append(ships[ship][0][1])
-        shipsOnBoard.append(ships[ship][1][1])
-    """
-
+        print_grid(grids)
+        #  x -= 1
 
     return shipsOnBoard
 
+
+def getAngle():
+    angle = input("choose an angle(write : r for right d for down): ")
+    # //TODO: kicsit komolyabbra majd ofc
+    return angle
 
 
 def menu():
@@ -168,8 +177,8 @@ def credit():
     
 
 def coordCheck(guess, grid):
-    x =guess[0]
-    y =guess[1]
+    x = guess[0]
+    y = guess[1]
     if grid[x][y] == 0:
         print("missed")
     elif grid[x][y] == 1:
