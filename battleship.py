@@ -22,6 +22,7 @@ Description::::
 
 """
 
+
 def headline():
     print('\033[95m'+ """                                                         
                     ._         ___   .___________.___________. __       _______     _______. __    __   __  .______   
@@ -36,10 +37,11 @@ def headline():
 def make_grid(size): # create x*x grid
     return [[0] * size for _ in range(size)]
 
+
 def grid_final(grids): # col naming
     grids[0][0] = " "
     alphabet = "ABCDEFGHIJKLMNOP"
-    x=1
+    x = 1
     while x < len(grids[0]):
         grids[0][x] = x
         grids[x][0] = alphabet[((x)-1)]
@@ -49,9 +51,9 @@ def grid_final(grids): # col naming
 
 
 def print_grid(grid): # printing the grids properly
-    #os.system("clear")
     for row in grid:
         print(row)
+
 
 def alphabet(x): #alphabet
     return {
@@ -77,6 +79,7 @@ def alphabet(x): #alphabet
         'j': 10        
     }[x]
 
+
 def usr_coords():
     
     try:        
@@ -92,47 +95,67 @@ def usr_coords():
     row = alphabet(row)
 
     if row == 0 and col is row:
-        print("invalid input")      
-    
+        print("invalid input")         
 
-    coords = [row,col]     
-    return  coords
+    coords = [row, col]     
+    return coords
+
 
 def placeBoat(grids):
     ships = {
-    "destroyer": [("size",2),("db",4)],
-    "cruiser" :  [("size", 3), ("db", 2)],
-    "submarine" :  [("size", 3), ("db", 1)],
-    "battleship" :  [("size", 4), ("db", 2)],
-    "carrier" :  [("size", 5), ("db", 1)],    
-}
+        "destroyer": [("size", 2), ("db", 4)],
+        "cruiser":  [("size", 3), ("db", 2)],
+        "submarine":  [("size", 3), ("db", 1)],
+        "battleship":  [("size", 4), ("db", 2)],
+        "carrier":  [("size", 5), ("db", 1)],    
+    }
+
     shipsOnBoard = []
     print("place your ships")
 
     for ship in ships:
         x = ships[ship][1][1]
-        #   while x != 0:            
-        print("place: "+str(ship)+" | Size: "+str(ships[ship][0][1])+" | "+str(x)+" ship left to place" )
-        shipsOnBoard = (usr_coords())
-        # //TODO: angle
-        angle = getAngle()
-        print(angle)
-        grids[shipsOnBoard[0]][shipsOnBoard[1]] = 3
-        
-        size = ships[ship][0][1]
-        for x in range(size):
-            if angle == "r":
-                # te meg normális
-                print("vmi")
-                pass
-            elif angle == "d":
-                # menjé lefele
-                pass
+        while x != 0:            
+            print("place: "+str(ship)+" | Size: "+str(ships[ship][0][1])+" | "+str(x)+" ship left to place" )
+            shipsOnBoard = (usr_coords())
+            # //TODO: angle
+            angle = getAngle()
+            grids[shipsOnBoard[0]][shipsOnBoard[1]] = 3            
+            size = ships[ship][0][1]
+            for y in range(size-1):
+                if angle == "r":
+                    # te meg normális
+                    shipsOnBoard[1] += 1
+                    coordCheck(shipsOnBoard, grids)    # //FIXME: check func
+                    grids[shipsOnBoard[0]][shipsOnBoard[1]] = 3
+                elif angle == "d":
+                    # menjé lefele
+                    shipsOnBoard[0] += 1
+                    coordCheck(shipsOnBoard, grids)    # //FIXME: check func
+                    grids[shipsOnBoard[0]][shipsOnBoard[1]] = 3
 
-        print_grid(grids)
-        #  x -= 1
+            print_grid(grids)
+            x -= 1
 
     return shipsOnBoard
+
+
+def coordCheck(guess, grid):
+    x = guess[0]
+    y = guess[1]
+    
+    if grid[x][y] == 0:
+        print("missed")
+    elif grid[x][y] == 1:
+        print("already tried")
+    elif grid[x][y] == 2:
+        print("ship found")
+    elif grid[x][y] == 3:
+        print("shipdamaged")
+    elif grid[x][y] == 4:
+        print("already tried")      
+    
+    print("\n") 
 
 
 def getAngle():
@@ -166,30 +189,18 @@ def menu():
         time.sleep(3)
         menu()
 
+
 def one_vs_one():
    pass
+
     
 def one_vs_cpu():
    pass
 
+
 def credit():
     pass
-    
-
-def coordCheck(guess, grid):
-    x = guess[0]
-    y = guess[1]
-    if grid[x][y] == 0:
-        print("missed")
-    elif grid[x][y] == 1:
-        print("already tried")
-    elif grid[x][y] == 2:
-        print("ship found")
-    elif grid[x][y] == 3:
-        print("shipdamaged")
-    elif grid[x][y] == 4:
-        print("already tried")      
-    
+        
 
 def main(): #
     grids = make_grid(11)
@@ -205,7 +216,6 @@ def main(): #
         coordCheck(coords, grids)
         grids[coords[0]][coords[1]] += 1
         pass
-
         
 
 if __name__ == "__main__":
